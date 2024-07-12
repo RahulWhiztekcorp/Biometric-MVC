@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\BiometricManagement-MVC.props" />
+</Project>

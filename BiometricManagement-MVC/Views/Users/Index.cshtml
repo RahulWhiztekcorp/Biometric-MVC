@@ -1,0 +1,68 @@
+﻿@using BiometricManagement_MVC.Controllers
+@* @model IEnumerable<User>
+
+<h2>Users</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Full Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Username</td>
+                <td>@item.FullName</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.UserId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+ *@
+@model IEnumerable<UserDurationViewModel>
+
+@{
+    ViewData["Title"] = "User Logins";
+}
+
+<h2>User Logins</h2>
+
+<form method="get">
+    <div class="form-group">
+        <label for="date">Filter by Date:</label>
+        <input type="date" id="date" name="date" class="form-control" value="@ViewContext.HttpContext.Request.Query["date"]" />
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Full Name</th>
+            <th>Durations</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.FullName</td>
+                <td>
+                    <ul>
+                        @foreach (var duration in user.Durations)
+                        {
+                            <li>@duration</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

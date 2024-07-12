@@ -1,0 +1,49 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = $"Details for {Model.FullName}";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Details for @Model.FullName</h2>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Login/Logout Durations</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                @foreach (var duration in (IEnumerable<TimeSpan>)ViewBag.Durations)
+                {
+                    <li class="list-group-item">
+                        @duration.ToString(@"hh\:mm\:ss\.fff")
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="card-footer text-muted">
+            Total Duration: @(ViewBag.Durations != null ? ((IEnumerable<TimeSpan>)ViewBag.Durations).Aggregate(TimeSpan.Zero, (sum, next) => sum.Add(next)).ToString(@"hh\:mm\:ss\.fff") : "00:00:00.000")
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <form asp-action="Login" method="post" class="d-inline">
+            <input type="hidden" name="userId" value="@Model.UserId" />
+            <button type="submit" class="btn btn-success">Login</button>
+        </form>
+        <form asp-action="Logout" method="post" class="d-inline">
+            <input type="hidden" name="userId" value="@Model.UserId" />
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    </div>
+
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        // Add any custom JavaScript here if needed
+    </script>
+}
+
+<style>
